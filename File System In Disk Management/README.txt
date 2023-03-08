@@ -1,9 +1,6 @@
 Disk File System 
 Authored by: Hakam Nabulssi 
 
-
-
-
 ===================Description===================
 
 Disk file systems are file systems which manage data on permanent storage devices.
@@ -52,6 +49,7 @@ fsFile: the job is to store information about the file, it’s a kind of data st
 · the program also includes setters and getters functions and a destructor.
 
 ==========Program Files==============
+
 · FileDescriptor.cpp : include the fileDescriptor implementation and its setters and getters, variables initialization .
 · FileDescriptor.h : header of the FileDescriptor, include the class of FileDescriptor and its features.  
 · FsFile.cpp : include the FsFile implementation and its setters and getters, variables initialization
@@ -60,16 +58,13 @@ fsFile: the job is to store information about the file, it’s a kind of data st
 · fsDisk.h : header of the fsDisk, include the class of fsDisk and two maps that implement the mainDir and the OpenFileDescriptors, call for all the functions that been used at the fsDisk and the features
 · main.cpp : the main of the project.
 
-
-
 =================compiling steps===================
 
-g++ ex7_final_proj.2021.cpp -o ex7_final_proj.2021
+g++ main.cpp -o main
 
-run: ./ex7_final_proj.2021
+run: ./main
 
 ================= Output ===================
-
 
 2
 4
