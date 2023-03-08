@@ -1,0 +1,201 @@
+Simple Shell 
+Authored by : Hakam Nabulssi
+
+
+==Description==
+A shell is a program that provides the traditional, text-only user interface for Linux and other Unix-like operating system, And it’s an interface between the user and the internal parts of the operating system (at the very core of which is the kernel), and in this exercise we're aiming to make a Simple shell that execute the basic commands such as (man, echo, ls, cat, more, expr, sleep).
+
+
+==Global variables==
+length_of_command(int), number_of_commands(int)
+
+
+==Functions==
+this process has five function and the main.
+
+1st function "prompt"(void):
+this function contains an array of pointers that point on the memory in an allocated way using malloc and replacing the current folder with the existing one that the folder saved in it and printing out the directory and the path and free the allocated memory.
+ 
+
+2nd function "remove_end_of_line"(void):
+receives the line array as a parameter, this function has been called in the "read_line" function, when “fgets” used in “c” to receive information from the user, it will place “\n” in the end of the line and this function just remove the “\n” form the end using while loop that placing “\0” in the place of “\n” when the index reach the end of the array.
+
+
+3rd function “read_line” (void): 
+receives the line array as a parameter and fill this array with the string that’s get from the user using fgets and calling the "remove_end_of_line" function to remove the “\n” from the last of the array, adding the each length of the string to a “length_of_command” variable each time the method called and after that we enter the loop that counts the number of words in the string according to the condition “if the user didn’t enter done or Ctrl-D”, and if entered “done or Ctrl-D”, the function print out the number of the commands, the sum of the lengths, the average, and "See you Next time ! ". 
+
+
+4th function “parse_line”(int):
+receives the line and the args, this function parsing the string by placing “\0” in each place of space“ ”, using the “strtok” function, in the beginning the function checks if the line contains nothing and returns “1”, and if the line array full of command entered by the user, it will parse the strings by pointing of each cell after “\0” after replacing the spaces and fill the args in the ordered manner .
+
+
+5th function “read_parse_line”(int):
+this function receives the line and the args and calling the prompt, read_line, parse_line function to do the process on them, and checks if the user enter nothing (click "\n") as command, will print “NO COMMAND”, and returning 1.
+
+
+The main: 
+The main contains the args “for saving the commands in 50 word size ”, and the line “for saving the line entered by the user in 511 length size ” as stores, and by getting into a loop building another process  “parent and child using fork” and checking in witch process we are “if equal to (0) then we are in the child and if -1 then system call is failed and else were in the parent ” so if we are in the child then checking if the command is “cd” and print “Command is not supported (yet)” and else executing the child process using “execvp”. And if we are in the parent then wait to the child till the end of the child process using “wait”.    
+
+
+==Things that have been added to the second part of the exercise==
+an array to save the path of the scheduler "/proc/PID/sched"
+in addition to another array to save as follows{null,path,cat}
+and calling the exec to execute the new child process. 
+
+
+==Program Files==
+EX2-a.c , EX2-b.c
+they both contain only the main and the functions .
+
+ 
+==compiling Steps==
+1st part:
+compile: gcc EX2-a.c -o EX2-a
+run: ./EX2-a
+
+2nd part:
+compile: gcc EX2-b.c -o EX2-b
+run: ./EX2-b
+
+
+==first part Input:==
+ls
+
+
+==Output:==
+ATester		CMakeFiles	     hanna.txt	Testing   x.txt
+ATester.cbp	cmake_install.cmake  Makefile	text.txt
+CMakeCache.txt	file		     test	x
+
+
+==first part another input==
+ls -l
+
+
+==output==
+total 88
+-rwxrwxr-x 1 student student 22136 Apr 15 00:17 ATester
+-rw-rw-r-- 1 student student  5158 Apr 14 18:40 ATester.cbp
+-rw-rw-r-- 1 student student 23117 Apr 14 18:40 CMakeCache.txt
+drwxrwxr-x 6 student student  4096 Apr 15 00:17 CMakeFiles
+-rw-rw-r-- 1 student student  1663 Apr 14 18:40 cmake_install.cmake
+-rwxrwxr-x 1 student student     0 Apr  6 05:38 file
+-rw-rw-r-- 1 student student    13 Apr 13 17:00 hanna.txt
+-rw-rw-r-- 1 student student  5321 Apr 14 18:40 Makefile
+-rwxrwxr-x 1 student student     0 Apr  6 21:43 test
+drwxrwxr-x 3 student student  4096 Apr  6 04:55 Testing
+-rwxrwxr-x 1 student student     0 Apr  6 21:45 text.txt
+-rwxrwxr-x 1 student student   110 Apr  6 21:49 x
+-rwxrwxr-x 1 student student     8 Apr  6 21:48 x.txt
+
+
+==after done==
+Number of commands 3
+Total length of all commands : 11
+average length of all commands : 3.000000
+See you Next time ! 
+Process finished with exit code 0
+
+
+==second part input== 
+ls
+
+
+==output==
+ATester (7265, #threads: 1)
+-------------------------------------------------------------------
+se.exec_start                                :      20554748.582927
+se.vruntime                                  :        310941.055451
+se.sum_exec_runtime                          :             0.078931
+se.nr_migrations                             :                    0
+nr_switches                                  :                    1
+nr_voluntary_switches                        :                    1
+nr_involuntary_switches                      :                    0
+se.load.weight                               :              1048576
+se.runnable_weight                           :              1048576
+se.avg.load_sum                              :                47535
+se.avg.runnable_load_sum                     :                47535
+se.avg.util_sum                              :             23141458
+se.avg.load_avg                              :                 1024
+se.avg.runnable_load_avg                     :                 1024
+se.avg.util_avg                              :                  490
+se.avg.last_update_time                      :       20554748576768
+se.avg.util_est.ewma                         :                  122
+se.avg.util_est.enqueued                     :                  491
+policy                                       :                    0
+prio                                         :                  120
+clock-delta                                  :                   10
+mm->numa_scan_seq                            :                    0
+numa_pages_migrated                          :                    0
+numa_preferred_nid                           :                   -1
+total_numa_faults                            :                    0
+current_node=0, numa_group_id=0
+numa_faults node=0 task_private=0 task_shared=0 group_private=0 group_shared=0
+ATester		CMakeFiles	     hanna.txt	Testing   x.txt
+ATester.cbp	cmake_install.cmake  Makefile	text.txt
+CMakeCache.txt	file		     test	x
+
+
+==second part another input == 
+ls -l 
+
+
+==output== 
+ATester (7267, #threads: 1)
+-------------------------------------------------------------------
+se.exec_start                                :      20614550.442180
+se.vruntime                                  :        321324.199103
+se.sum_exec_runtime                          :             0.132243
+se.nr_migrations                             :                    0
+nr_switches                                  :                    1
+nr_voluntary_switches                        :                    1
+nr_involuntary_switches                      :                    0
+se.load.weight                               :              1048576
+se.runnable_weight                           :              1048576
+se.avg.load_sum                              :                47022
+se.avg.runnable_load_sum                     :                47022
+se.avg.util_sum                              :             23904779
+se.avg.load_avg                              :                 1024
+se.avg.runnable_load_avg                     :                 1024
+se.avg.util_avg                              :                  507
+se.avg.last_update_time                      :       20614550437888
+se.avg.util_est.ewma                         :                  126
+se.avg.util_est.enqueued                     :                  507
+policy                                       :                    0
+prio                                         :                  120
+clock-delta                                  :                    9
+mm->numa_scan_seq                            :                    0
+numa_pages_migrated                          :                    0
+numa_preferred_nid                           :                   -1
+total_numa_faults                            :                    0
+current_node=0, numa_group_id=0
+numa_faults node=0 task_private=0 task_shared=0 group_private=0 group_shared=0
+total 88
+-rwxrwxr-x 1 student student 22432 Apr 15 00:20 ATester
+-rw-rw-r-- 1 student student  5158 Apr 14 18:40 ATester.cbp
+-rw-rw-r-- 1 student student 23117 Apr 14 18:40 CMakeCache.txt
+drwxrwxr-x 6 student student  4096 Apr 15 00:20 CMakeFiles
+-rw-rw-r-- 1 student student  1663 Apr 14 18:40 cmake_install.cmake
+-rwxrwxr-x 1 student student     0 Apr  6 05:38 file
+-rw-rw-r-- 1 student student    13 Apr 13 17:00 hanna.txt
+-rw-rw-r-- 1 student student  5321 Apr 14 18:40 Makefile
+-rwxrwxr-x 1 student student     0 Apr  6 21:43 test
+drwxrwxr-x 3 student student  4096 Apr  6 04:55 Testing
+-rwxrwxr-x 1 student student     0 Apr  6 21:45 text.txt
+-rwxrwxr-x 1 student student   110 Apr  6 21:49 x
+-rwxrwxr-x 1 student student     8 Apr  6 21:48 x.txt
+
+
+==after done== 
+Number of commands 3
+Total length of all commands : 11
+average length of all commands : 3.000000
+See you Next time ! 
+Process finished with exit code 0
+
+
+
+
+
+
+
