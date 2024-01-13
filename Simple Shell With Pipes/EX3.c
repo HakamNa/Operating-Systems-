@@ -1,5 +1,4 @@
 // Hakam Nabulssi
-// ID: 207710443
 
 // libraries used in this exercise
 #include <pwd.h>
